@@ -1,0 +1,10 @@
+/x64
+/.vs
+/darknet_jni/.vs
+/darknet_jni/x64
+/darknet_jni/Release
+*.dll
+*.exp
+*.iobj
+*.ipdb
+*.pdb
