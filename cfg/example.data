@@ -1,0 +1,7 @@
+classes= 6
+#train  = data/coco/trainvalno5k.txt
+#valid  = data/coco_testdev
+#valid = data/coco_val_5k.list
+names = example/example.names
+#backup = backup/
+#eval=example

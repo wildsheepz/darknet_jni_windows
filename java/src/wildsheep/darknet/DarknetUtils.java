@@ -6,11 +6,11 @@ public class DarknetUtils {
 
 	public static DarknetUtils getInstance() {
 		synchronized (DarknetUtils.class) {
-			System.loadLibrary("yolo_cpp_dll");
+			System.loadLibrary("darknet_jni");
 			if (api == null) {
 				api = new DarknetUtils();
-				api.load("lords\\lords.data", "lords\\lords.names", "lords\\tiny-yolo-lords-test.cfg",
-						"lords\\tiny-yolo-lords_final.weights");
+				api.load("cfg\\example.data", "cfg\\example.names", "cfg\\example-tiny-yolo-test-6classes.cfg",
+						"cfg\\example-tiny-yolo-6classes.weights");
 			}
 			return api;
 		}
