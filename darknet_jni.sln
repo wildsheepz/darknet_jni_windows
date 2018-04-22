@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "darknet_jni", "darknet_jni\darknet_jni.vcxproj", "{954359B2-756E-43E4-B042-A9A23470E5BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4CF5694F-12A5-4012-8D94-9A0915E9FEB5} = {4CF5694F-12A5-4012-8D94-9A0915E9FEB5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yolo_cpp_dll", "darknet\build\darknet\yolo_cpp_dll.vcxproj", "{4CF5694F-12A5-4012-8D94-9A0915E9FEB5}"
 EndProject
