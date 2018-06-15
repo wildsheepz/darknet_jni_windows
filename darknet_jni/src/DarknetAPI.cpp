@@ -33,7 +33,7 @@ std::vector<Result> DarknetAPI::detect(image & im, float thresh, float hier_thre
 	std::clock_t end = std::clock();
 	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
-	printf("%s: Predicted in %f seconds.\n", input, (elapsed_secs));
+	printf("JNI: %s: Predicted in %f seconds.\n", std::string(input), (elapsed_secs));
 
 	int nboxes = 0;
 	detection *dets = get_network_boxes(&net, im.w, im.h, thresh, hier_thresh, 0, 1, &nboxes, letterbox);

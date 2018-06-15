@@ -15,11 +15,13 @@ image readRawImageData(std::string image_path);
 */
 JNIEXPORT jobjectArray JNICALL Java_wildsheep_darknet_DarknetUtils_inference
 (JNIEnv * env, jobject, jstring image_name_j) {
+	std::cout << "JNI: Inference starting"<< std::endl;
+
 	std::string image_name  = env->GetStringUTFChars(image_name_j, (jboolean)false);
 	image im = readRawImageData(image_name);
 	//image im2 = copy_image(im);
 	std::vector<Result> results = api->detect(im);
-	std::cout << "Detection results count: " << results.size() << std::endl;
+	std::cout << "JNI: Detection results count: " << results.size() << std::endl;
 	
 	jclass c = (*env).FindClass("wildsheep/darknet/Result");
 	jmethodID mid = NULL;
@@ -41,13 +43,14 @@ JNIEXPORT jobjectArray JNICALL Java_wildsheep_darknet_DarknetUtils_inference
 
 				jobject jObj = (*env).NewObject(c, mid, l, t, jr, b, conf, jlabel);
 				(*env).SetObjectArrayElement(returnArr, i, jObj);
-				//std::cout << r.label << " " << r.left << " " << r.top << " " << r.right << " " << r.bot << " " << r.confidence << std::endl;
+				std::cout << "JNI: " << r.label << " " << r.left << " " << r.top << " " << r.right << " " << r.bot << " " << r.confidence << std::endl;
 				//draw_box(im2, r.left, r.top, r.right, r.bot, 255, 0, 0);
 			}
 		}
 	}
 	//save_image_png(im2, "test");
 	//free_image(im2);
+	std::cout << "JNI: Inference routine complete" << std::endl;
 	return returnArr;
 }
 
@@ -109,7 +112,7 @@ image readRawImageData(std::string image_path) {
 	
 	image im = make_image(width, height, 3);
 
-	std::cout << im.c << "x" << im.w << "x" << im.h << std::endl;
+	std::cout << "JNI: " << im.c << "x" << im.w << "x" << im.h << std::endl;
 
 	char * pixel;
 	int pixel_size = -1;
@@ -134,8 +137,8 @@ image readRawImageData(std::string image_path) {
 	unsigned int * bitshifts = bitshift(pixelFormat);
 	int pixel_idx = 0;
 	
-	std::cout << "pixelFormat: " << pixelFormat << std::endl;
-	std::cout << "bytes per pixel: " << pixel_size << std::endl;
+	std::cout << "JNI: " << "pixelFormat: " << pixelFormat << std::endl;
+	std::cout << "JNI: " << "bytes per pixel: " << pixel_size << std::endl;
 
 
 	while (infile.peek() != EOF){
@@ -156,7 +159,7 @@ image readRawImageData(std::string image_path) {
 		set_pixel(im, x, y, 2, ((float)b)/255 );
 		++pixel_idx;
 	}
-	std::cout << get_pixel(im, 10, 10, 2) << std::endl;
+	//std::cout << "JNI: " << get_pixel(im, 10, 10, 2) << std::endl;
 	infile.close();
 
 	//print_image(im);
@@ -175,7 +178,7 @@ image readRawImageData(std::string image_path) {
 */
 JNIEXPORT jboolean JNICALL Java_wildsheep_darknet_DarknetUtils_load
 (JNIEnv * env, jobject obj, jstring datacfg_j, jstring name_list_file_j, jstring cfgfile_j, jstring weightfile_j) {
-	std::cout << "Loading network and weights.." << std::endl;
+	std::cout << "JNI: " << "Loading network and weights.." << std::endl;
 
 	std::string datacfg = env->GetStringUTFChars(datacfg_j, (jboolean)false);
 	std::string name_list_file = env->GetStringUTFChars(name_list_file_j, (jboolean)false);
@@ -185,7 +188,7 @@ JNIEXPORT jboolean JNICALL Java_wildsheep_darknet_DarknetUtils_load
 	api = new DarknetAPI(&datacfg[0u], &name_list_file[0u], &cfgfile[0u], &weightfile[0u]);
 	assert(api && "Failed to initialize DarknetAPI");
 	jboolean b = 1;
-	std::cout << "Done." << std::endl;
+	std::cout << "JNI: " << "Done." << std::endl;
 	return b;
 }
 
@@ -198,6 +201,6 @@ JNIEXPORT jboolean JNICALL Java_wildsheep_darknet_DarknetUtils_unload
 (JNIEnv *, jobject) {
 	delete(api);
 	jboolean b = 1;
-	std::cout << "Unloaded network from memory." << std::endl;
+	std::cout << "JNI: " << "Unloaded network from memory." << std::endl;
 	return b;
 }
